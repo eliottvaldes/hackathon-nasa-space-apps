@@ -4,7 +4,7 @@ from flask import Flask, request
 import replicate
 from logging.config import dictConfig
 import sys
-from flask_cors import CORS
+# from flask_cors import CORS
 
 dictConfig({
     'version': 1,
@@ -23,7 +23,7 @@ dictConfig({
 })
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 @app.route("/query")
 def query():
