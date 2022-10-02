@@ -4,7 +4,7 @@ from flask import Flask, request
 import replicate
 from logging.config import dictConfig
 import sys
-# from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 dictConfig({
     'version': 1,
@@ -23,9 +23,11 @@ dictConfig({
 })
 
 app = Flask(__name__)
-# CORS(app)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/query")
+@cross_origin()
 def query():
     encoded_data = request.args.get('data', '')
     data = base64.b64decode(encoded_data)
@@ -61,6 +63,7 @@ def query():
     return bj
 
 @app.route("/")
+@cross_origin()
 def hello_world():
     return "<p>Hola universo!</p>"
 
