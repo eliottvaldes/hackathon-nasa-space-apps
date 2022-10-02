@@ -52,7 +52,7 @@ def query():
 
     finalobj = {
         "images": objects,
-        "userPrompt": obj["userPrompt"],
+        "prompt": obj["prompt"],
         "artist": obj["artist"]
     }
 
