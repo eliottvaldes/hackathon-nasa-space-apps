@@ -5,6 +5,7 @@ import replicate
 from logging.config import dictConfig
 import sys
 from flask_cors import CORS, cross_origin
+from flask import jsonify
 
 dictConfig({
     'version': 1,
@@ -65,9 +66,13 @@ def query():
 @app.route("/")
 @cross_origin()
 def hello_world():
-    return "<p>Hola universo!</p>"
+#    return "<p>Hola universo!</p>"
+    return jsonify(
+        body="Hola Universo en Json"
+    );
 
 if __name__ == '__main__':
     app.debug = True
     app.run()
 
+       
