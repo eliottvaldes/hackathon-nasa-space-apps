@@ -5,6 +5,7 @@ import replicate
 from logging.config import dictConfig
 import sys
 from flask_cors import CORS, cross_origin
+from flask import jsonify
 
 dictConfig({
     'version': 1,
@@ -30,6 +31,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin()
 def query():
     encoded_data = request.args.get('data', '')
+    print(f"Got encoded data: {encoded_data}", file=sys.stderr)
+
+    encoded_data = encoded_data[1:-1]
+    print(f"MORE MORE encoded data: {encoded_data}", file=sys.stderr)
+
     data = base64.b64decode(encoded_data)
     obj = json.loads(data)
     model = replicate.models.get("paper11667/clipstyler")
@@ -56,11 +62,13 @@ def query():
         "artist": obj["artist"]
     }
 
-    jobj = json.dumps(finalobj)
-    print(f"jobj: {jobj}", file=sys.stderr)
-    bj = base64.b64encode(bytes(jobj, 'utf-8'))
+    # jobj = json.dumps(finalobj)
+    # print(f"jobj: {jobj}", file=sys.stderr)
+    # bj = base64.b64encode(bytes(jobj, 'utf-8'))
     app.logger.info(f'Done processing...')
-    return bj
+    return jsonify(
+        body= finalobj
+    )
 
 @app.route("/")
 @cross_origin()
