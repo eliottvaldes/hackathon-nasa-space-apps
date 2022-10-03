@@ -60,8 +60,12 @@ def query():
     jobj = json.dumps(finalobj)
     print(f"jobj: {jobj}", file=sys.stderr)
     bj = base64.b64encode(bytes(jobj, 'utf-8'))
+    bj2 = base64.b64encode(bytes(finalobj, 'utf-8'))
     app.logger.info(f'Done processing...')
-    return bj
+#    return bj
+    return jsonify(
+        body=bj2
+    );
 
 @app.route("/")
 @cross_origin()
